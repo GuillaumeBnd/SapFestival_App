@@ -45,7 +45,7 @@ const artists: Artist[] = [
   // the function of the artist screen
  export default function ArtistsScreen() {
 
-    const { focusArtist } = useLocalSearchParams(); // if we arrive on this screen after the touchable on press from the calender we have a param "focusArtist"
+    const { focusArtist } = useLocalSearchParams(); // if we arrive on this screen after the touchable onPress from the calender we have a param "focusArtist"
     const scrollViewRef = useRef<ScrollView>(null); // enable scrolling
     const [offsets, setOffsets] = useState<{ [key: number]: number }>({}); // tool used to auto scroll to the artist in the param 
     
