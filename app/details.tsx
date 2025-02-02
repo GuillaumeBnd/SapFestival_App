@@ -2,56 +2,61 @@ import React from 'react';
 import {View, Text, StyleSheet, Image, ImageBackground, TouchableOpacity, Dimensions, ScrollView} from 'react-native';
 import colors from '../assets/colors/colors';
 import { useRoute } from '@react-navigation/native';
+import { RouteProp } from '@react-navigation/native';
 import Entypo from 'react-native-vector-icons/Entypo';
+import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import type { RootStackParamList } from "@/types";
 
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
+
 const Details = () => {
-    const route = useRoute();
-    const { item } = route.params; // Récupérer les données de l'artiste
-  
-    return (
-      <View style={styles.container}>
-        <ImageBackground source={item.image} style={styles.backgroundImage} resizeMode="cover" />
 
-        <View style={styles.descriptionWrapper}>
+  const route = useRoute<RouteProp<RootStackParamList, 'details'>>();
+  const { item } = route.params; 
 
-          <View style={styles.descriptionTextWrapper}>
-            <Text style={styles.descriptionTitle}>{item.name}</Text>
-            <ScrollView style={styles.descriptionScrollable} >
-              <Text style={styles.descriptionText}>{item.bio}</Text>
-            </ScrollView>
+  return (
+    <View style={styles.container}>
+      <ImageBackground source={item.image} style={styles.backgroundImage} resizeMode="cover" />
+
+      <View style={styles.descriptionWrapper}>
+
+        <View style={styles.descriptionTextWrapper}>
+          <Text style={styles.descriptionTitle}>{item.name}</Text>
+          <ScrollView style={styles.descriptionScrollable} >
+            <Text style={styles.descriptionText}>{item.bio}</Text>
+          </ScrollView>
+        </View>
+
+        <View style={styles.infoWrapper}>
+        
+          <View style={styles.infoItem}>
+            <Text style={styles.infoTitle}>STYLE</Text>
+
+            <View style={styles.infoTextWrapper}>
+              <Text style={styles.infoText}>{item.style}</Text>
+            </View>
+          
           </View>
 
-          <View style={styles.infoWrapper}>
+          <View style={styles.infoItem}>
+            
+            <Text style={styles.infoTitle}>CRENEAU</Text>
+
+            <View style={styles.infoTextWrapper}>
+              <Text style={styles.infoText}>{item.duration}</Text>
+            </View>
           
-            <View style={styles.infoItem}>
-              <Text style={styles.infoTitle}>STYLE</Text>
-
-              <View style={styles.infoTextWrapper}>
-                <Text style={styles.infoText}>{item.style}</Text>
-              </View>
-            
-            </View>
-
-            <View style={styles.infoItem}>
-              
-              <Text style={styles.infoTitle}>CRENEAU</Text>
-
-              <View style={styles.infoTextWrapper}>
-                <Text style={styles.infoText}>{item.duration}</Text>
-              </View>
-            
-            </View>
-
           </View>
 
         </View>
-        
+
       </View>
-    );
-  };
+      
+    </View>
+  );
+};
 
   const styles = StyleSheet.create({
     container: {
