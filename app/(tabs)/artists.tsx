@@ -1,38 +1,30 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { StyleSheet,SafeAreaView,ScrollView, Text, TouchableOpacity, View,Image,} from 'react-native';
-import { useRoute } from '@react-navigation/native';
-import Ionicons from '@expo/vector-icons/Ionicons';
-import { useLocalSearchParams } from 'expo-router'; // used to search in the page, the param
-import imageMapper from '@/components/imageMapper'; //  image mapper reference all pictures without having to enter the complete path
-import artistsData from '../../assets/data/artistsData';
+import React from 'react';
+import { StyleSheet, SafeAreaView, ScrollView, Text, TouchableOpacity, View, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import type { RootStackParamList } from "@/types";
-import { ImageSourcePropType } from 'react-native';
-import { useMemo } from 'react';
+import imageMapper from '@/components/imageMapper';
+import artistsData from '../../assets/data/artistsData';
+import type { Artist } from "@/types";
 
-type NavigationProps = NativeStackNavigationProp<RootStackParamList, "details">;
-
-
-
+type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 export default function ArtistsScreen() {
-  const navigation = useNavigation<NavigationProps>();
-
+  const navigation = useNavigation<NavigationProp>();
 
   return (
     <SafeAreaView style={styles.safeAreaViewContainer}>
       <ScrollView style={styles.container}>
         <View style={styles.grid}>
-          {artistsData.map((artist, index) => (
+          {artistsData.map((artist: Artist, index: number) => (
             <TouchableOpacity 
               key={`artist-${index}`} 
               style={styles.artistContainer}
-              onPress={() => navigation.navigate('details', { item :artist })}
+              onPress={() => navigation.navigate('details', { item: artist })}
             >
               <View style={styles.circleImageContainer}>
                 <Image
-                  alt=""
+                  alt={artist.name}
                   resizeMode="cover"
                   source={imageMapper[artist.image]}
                   style={styles.circleImage}
@@ -46,6 +38,7 @@ export default function ArtistsScreen() {
     </SafeAreaView>
   );
 }
+
 const styles = StyleSheet.create({
   safeAreaViewContainer: {
     flex: 1,
@@ -60,14 +53,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   artistContainer: {
-    width: '30%', // Pour avoir 3 artistes par ligne
+    width: '45%',
     alignItems: 'center',
     marginBottom: 20,
   },
   circleImageContainer: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+    width: 120,
+    height: 120,
+    borderRadius: 60,
     overflow: 'hidden',
     marginBottom: 8,
   },

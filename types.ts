@@ -1,10 +1,10 @@
 export interface Artist {
-  id: string;
+  id: number;  // Changé de string à number pour correspondre à artistsData
   name: string;
+  bio: string;
   image: any;
-  bio?: string;
-  style?: string;
-  duration?: string;
+  duration: string;
+  style: string;
 }
 
 export type RootStackParamList = {
