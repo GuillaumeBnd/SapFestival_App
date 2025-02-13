@@ -6,7 +6,7 @@ import { RouteProp } from '@react-navigation/native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import type { RootStackParamList } from "@/types";
-
+import imageMapper from '@/components/imageMapper';
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
@@ -18,7 +18,7 @@ const Details = () => {
 
   return (
     <View style={styles.container}>
-      <ImageBackground source={item.image} style={styles.backgroundImage} resizeMode="cover" />
+      <ImageBackground source={imageMapper[item.image]} style={styles.backgroundImage} resizeMode="cover" />
 
       <View style={styles.descriptionWrapper}>
 

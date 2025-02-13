@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, FlatList, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableWithoutFeedback } from 'react-native';
 import moment from 'moment';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import type { RootStackParamList } from "@/types";
+import artistsData from '../../assets/data/artistsData';
 
 type NavigationProps = NativeStackNavigationProp<RootStackParamList, "(tabs)/artists">;// this is require to navigate to the screen "/(tabs)/artist" when cliking on a "Touchable", 
 
@@ -99,8 +100,14 @@ const ScheduleScreen = () => {
   
   // define the calendar function
   /// The touchable on press enable to navigate to the artist selected with a param "id of artist"
-  const renderCalendarItem = ({ item }:{item: typeof events}) => (
-    <TouchableWithoutFeedback onPress={() => navigation.navigate("artists", { focusArtist: item.id })}>
+  const renderCalendarItem = ({ item }: { item: Event }) => (
+    <TouchableWithoutFeedback onPress={() => {
+      // Trouver l'artiste correspondant dans artistsData
+      const artist = artistsData.find(a => a.name === item.artistName);
+      if (artist) {
+        navigation.navigate("details", { item: artist });
+      }
+    }}>
 
       <View style={styles.eventItem}>
         <View style={styles.timelineContainer}>

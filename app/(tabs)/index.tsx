@@ -19,6 +19,7 @@ import {useNavigation} from '@react-navigation/native';
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import type { RootStackParamList } from "@/types"; 
 import Ionicons from '@expo/vector-icons/Ionicons';
+import imageMapper from '@/components/imageMapper';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import FullScreenImageModal from '@/components/imageModal';
 import { ImageSourcePropType } from 'react-native';
@@ -33,17 +34,17 @@ const HomeScreen = () => {
   interface ActivityItem {
     id: number;
     name: string;
-    icon: ImageSourcePropType;
+    icon: string;
     info: string;
   }
 
   interface ArtistItem {
     id: number;
-    name : string;
+    name: string;
     bio: string;
-    image: ImageSourcePropType;
+    image: keyof typeof imageMapper;
     duration: string;
-    style :string;
+    style: string;
   }
 
   const renderActivityItem = useMemo(() => ({item}: {item: ActivityItem}) => (
@@ -53,14 +54,14 @@ const HomeScreen = () => {
         marginLeft: item.id === 1 ? 20 : 0,
       },
     ]}>
-      <Image source={item.icon} style={styles.activityItemImage} />
+      <Ionicons name={item.icon as keyof typeof Ionicons.glyphMap} size={50} style={styles.activityItemImage} />
       <Text style={styles.activityItemText}>{item.name}</Text>
     </View>
   ), [activitiesData]);
 
   const renderArtistItem = useMemo(() => ({ item }: { item: ArtistItem }) => (
     <TouchableOpacity onPress={() => navigation.navigate('details', { item : item })}>
-      <Image source={item.image} style={[
+      <Image source={imageMapper[item.image]} style={[
           styles.artistItem,
           {
             marginLeft: item.id === 1 ? 20 : 0,
@@ -165,6 +166,7 @@ const styles = StyleSheet.create({
   activityItemImage: {
     width: 50,
     height: 50,
+    color:"#F2784B"
   },
   activityItemText: {
     marginTop: 10,
